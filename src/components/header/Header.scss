@@ -1,0 +1,33 @@
+%center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-container {
+  display: flex;
+  width: 100%;
+  height: 80px;
+  background-color: rgb(184, 36, 36);
+  .header-btn-container {
+    @extend %center;
+    width: 100%;
+    height: 100%;
+    .header-btn {
+      font-size: 2em;
+    }
+  }
+
+  .header-auth-container {
+    @extend %center;
+    justify-content: flex-end;
+    margin-right: 4em;
+    width: 100%;
+    height: 100%;
+    button {
+      font-size: 1.3em;
+      border-radius: 5px;
+      border: 0;
+    }
+  }
+}
