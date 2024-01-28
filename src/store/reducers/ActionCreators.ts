@@ -5,8 +5,7 @@ import { IComics } from "../../types";
 
 export const getComics = () => async (dispatch: AppDispatch) => {
   const jsonStorage = JSON.parse(localStorage.getItem("persist:root")!);
-  const storage = JSON.parse(jsonStorage.ComicsReducer);
-  console.log(storage.comics);
+  const storage = jsonStorage && JSON.parse(jsonStorage.ComicsReducer);
 
   try {
     dispatch(ComicsSlice.actions.getComics());
@@ -26,12 +25,13 @@ export const getComics = () => async (dispatch: AppDispatch) => {
         bought: false,
         favorites: false,
       };
-      storage.comics.find((item: IComics) => {
-        if (item.id === el.id) {
-          sortComicsValue.bought = item.bought || false;
-          sortComicsValue.favorites = item.favorites || false;
-        }
-      });
+      storage &&
+        storage.comics.find((item: IComics) => {
+          if (item.id === el.id) {
+            sortComicsValue.bought = item.bought || false;
+            sortComicsValue.favorites = item.favorites || false;
+          }
+        });
       sortComicsValue.id = el.id;
       sortComicsValue.title = el.title;
       sortComicsValue.prices = el.prices;
@@ -39,7 +39,6 @@ export const getComics = () => async (dispatch: AppDispatch) => {
       sortComicsValue.description = el.description;
       comicsCollection.push(sortComicsValue);
     });
-
     dispatch(ComicsSlice.actions.getComicsSuccess(comicsCollection));
   } catch (e) {
     dispatch(ComicsSlice.actions.getComicsError(true));

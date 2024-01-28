@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { IComics } from "../../types";
 import { useAppSelector } from "../../hooks/redux";
+import FavoritesBtn from "./FavoritesBtn";
 
 interface ComicPageBtnFavoritsProps {
   handlerAdd: (id: number) => void;
@@ -15,7 +15,6 @@ const ComicPageBtnFavorits: FC<ComicPageBtnFavoritsProps> = ({
   comic,
 }) => {
   const [favorites, setFavorites] = useState(comic.favorites || false);
-  const params = useParams();
   const { isAuthenticated } = useAppSelector((state) => state.AuthReducer);
 
   useEffect(() => {
@@ -27,19 +26,13 @@ const ComicPageBtnFavorits: FC<ComicPageBtnFavoritsProps> = ({
   return (
     <div>
       {favorites ? (
-        <button
-          onClick={() => handlerAdd(+params.id!)}
-          disabled={!isAuthenticated}
-        >
+        <FavoritesBtn handler={handlerAdd} isAuthenticated={isAuthenticated}>
           Add to favorites
-        </button>
+        </FavoritesBtn>
       ) : (
-        <button
-          onClick={() => handlerRemove(+params.id!)}
-          disabled={!isAuthenticated}
-        >
+        <FavoritesBtn handler={handlerRemove} isAuthenticated={isAuthenticated}>
           Remove from favorites
-        </button>
+        </FavoritesBtn>
       )}
     </div>
   );

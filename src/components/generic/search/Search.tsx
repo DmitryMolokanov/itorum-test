@@ -9,6 +9,7 @@ interface SearchProps {
 const Search: FC<SearchProps> = ({ comics }) => {
   const [valueSearch, setValueSearch] = useState<string>("");
   const [findedComics, setFindedComics] = useState<Array<IComics>>([]);
+
   useEffect(() => {
     const finded = comics.filter((item) => {
       return item.title
@@ -28,7 +29,11 @@ const Search: FC<SearchProps> = ({ comics }) => {
           setValueSearch(e.target.value);
         }}
       />
-      <SearchList valueSearch={valueSearch} findedComics={findedComics} />
+      <SearchList
+        valueSearch={valueSearch}
+        setValueSearch={setValueSearch}
+        findedComics={findedComics}
+      />
     </div>
   );
 };

@@ -1,18 +1,16 @@
 .collection-container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
   width: 100%;
   height: fit-content;
-  position: absolute;
   a {
     text-decoration: none;
   }
   .comics {
     max-width: 216px;
     margin: 10px;
-    border: 1px solid white;
 
     .comics-title {
       text-align: center;

@@ -5,22 +5,34 @@ import CoverComics from "./CoverComics";
 import TitleComix from "./TitleComix";
 
 interface CollectionProps {
-  comics: Array<IComics>;
+  comics: IComics[];
+  page: IComics[];
 }
 
-const Collection: FC<CollectionProps> = ({ comics }) => {
+const Collection: FC<CollectionProps> = ({ comics, page }) => {
   return (
     <div className="collection-container">
-      {comics.map((el: IComics) => {
-        return (
-          <a href={`/${el.id}`} key={el.id}>
-            <div className="comics">
-              <CoverComics link={el} />
-              <TitleComix title={el.title} />
-            </div>
-          </a>
-        );
-      })}
+      {page
+        ? page.map((el: IComics) => {
+            return (
+              <a href={`/${el.id}`} key={el.id}>
+                <div className="comics">
+                  <CoverComics link={el} />
+                  <TitleComix title={el.title} />
+                </div>
+              </a>
+            );
+          })
+        : comics.slice(1, 10).map((el: IComics) => {
+            return (
+              <a href={`/${el.id}`} key={el.id}>
+                <div className="comics">
+                  <CoverComics link={el} />
+                  <TitleComix title={el.title} />
+                </div>
+              </a>
+            );
+          })}
     </div>
   );
 };

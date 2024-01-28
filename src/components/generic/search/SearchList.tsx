@@ -1,12 +1,22 @@
 import { FC } from "react";
 import { IComics } from "../../../types";
+import { ClickAwayListener } from "@material-ui/core";
 
 interface SearchListProps {
   valueSearch: string;
+  setValueSearch: (el: string) => void;
   findedComics: IComics[];
 }
 
-const SearchList: FC<SearchListProps> = ({ valueSearch, findedComics }) => {
+const SearchList: FC<SearchListProps> = ({
+  valueSearch,
+  findedComics,
+  setValueSearch,
+}) => {
+  const hiddenList = () => {
+    setValueSearch("");
+  };
+
   return (
     <div
       className="comics-list"
@@ -15,11 +25,13 @@ const SearchList: FC<SearchListProps> = ({ valueSearch, findedComics }) => {
       {valueSearch !== ""
         ? findedComics.map((item) => {
             return (
-              <a href={`/${item.id}`} key={item.id}>
-                <div className="list-item" key={item.id}>
-                  {item.title}
-                </div>
-              </a>
+              <ClickAwayListener onClickAway={hiddenList}>
+                <a href={`/${item.id}`} key={item.id}>
+                  <div className="list-item" key={item.id}>
+                    {item.title}
+                  </div>
+                </a>
+              </ClickAwayListener>
             );
           })
         : null}
