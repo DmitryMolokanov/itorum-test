@@ -3,6 +3,7 @@ import "./Collection.scss";
 import { IComics } from "../../types";
 import CoverComics from "./CoverComics";
 import TitleComix from "./TitleComix";
+import ComicsCard from "./ComicsCard";
 
 interface CollectionProps {
   comics: IComics[];
@@ -14,24 +15,10 @@ const Collection: FC<CollectionProps> = ({ comics, page }) => {
     <div className="collection-container">
       {page
         ? page.map((el: IComics) => {
-            return (
-              <a href={`/${el.id}`} key={el.id}>
-                <div className="comics">
-                  <CoverComics link={el} />
-                  <TitleComix title={el.title} />
-                </div>
-              </a>
-            );
+            return <ComicsCard el={el} />;
           })
         : comics.slice(1, 10).map((el: IComics) => {
-            return (
-              <a href={`/${el.id}`} key={el.id}>
-                <div className="comics">
-                  <CoverComics link={el} />
-                  <TitleComix title={el.title} />
-                </div>
-              </a>
-            );
+            return <ComicsCard el={el} />;
           })}
     </div>
   );
