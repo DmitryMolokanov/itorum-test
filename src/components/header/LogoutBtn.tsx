@@ -1,5 +1,5 @@
 import { useAppDispatch } from "../../hooks/redux";
-import { logout } from "../../store/reducers/AuthCreatos";
+import { logout } from "../../store/reducers/auth/AuthCreatos";
 
 const LogoutBtn = () => {
   const dispatch = useAppDispatch();

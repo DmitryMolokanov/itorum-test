@@ -4,11 +4,11 @@ export interface IComics {
   prices: Array<{ price: string }>;
   thumbnail: { path: string; extension: string };
   description: string;
-  bought: boolean;
-  favorites: boolean;
 }
 export interface IStateComics {
-  comics: Array<IComics>;
+  comics: IComics[];
+  favorites: IComics[];
+  purchases: IComics[];
   isLoading: boolean;
   error: boolean;
 }

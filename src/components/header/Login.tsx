@@ -6,7 +6,7 @@ import LogoutBtn from "./LogoutBtn";
 
 const Login = () => {
   const [isModal, setIsModal] = useState<boolean>(false);
-  const { isAuthenticated } = useAppSelector((state) => state.AuthReducer);
+  const { isAuth } = useAppSelector((state) => state.AuthReducer);
 
   const activateModal = () => {
     setIsModal(true);
@@ -14,11 +14,7 @@ const Login = () => {
 
   return (
     <div className="header-auth-container">
-      {isAuthenticated ? (
-        <LogoutBtn />
-      ) : (
-        <LoadingBtn activateModal={activateModal} />
-      )}
+      {isAuth ? <LogoutBtn /> : <LoadingBtn activateModal={activateModal} />}
 
       <ModalForm isModal={isModal} setIsModal={setIsModal} />
     </div>

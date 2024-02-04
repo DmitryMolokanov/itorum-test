@@ -1,12 +1,12 @@
 import { FC } from "react";
 
-interface ModalInputProps {
+interface ModalLoginProps {
   value: string;
   changeHandler: (e: string) => void;
   children: React.ReactNode;
 }
 
-const ModalInput: FC<ModalInputProps> = ({
+const ModalInput: FC<ModalLoginProps> = ({
   value,
   changeHandler,
   children,
@@ -16,6 +16,7 @@ const ModalInput: FC<ModalInputProps> = ({
       <label>{children}:</label>
       <input
         type="text"
+        className="input-value"
         value={value}
         onChange={(e) => changeHandler(e.target.value)}
       />

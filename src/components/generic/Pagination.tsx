@@ -1,51 +1,41 @@
-import { FC, useEffect, useState } from "react";
+import { Pagination } from "@mui/material";
 import { IComics } from "../../types";
+import { useState, FC, useEffect } from "react";
+import Collection from "../collection/Collection";
 
-interface PaginationProps {
+interface PaginationCollectionProps {
   comics: IComics[];
-  page: (el: IComics[]) => void;
 }
 
-const Pagination: FC<PaginationProps> = ({ comics, page }) => {
-  const [curPage, setCurPage] = useState<number>(1);
+const PaginationCollection: FC<PaginationCollectionProps> = ({ comics }) => {
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = () => {
-    let arr: Array<IComics[]> = [];
-    const size = 10;
-    for (let i = 0; i < comics.length; i += size) {
-      arr.push(comics.slice(i, i + size));
-    }
-    return arr;
-  };
-  const paginationArr = totalPages();
+  const itemsPerPage = 10;
+  const totalPages = Math.ceil(comics.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentComics = comics.slice(startIndex, endIndex);
 
-  useEffect(() => {
-    totalPages();
-    page(paginationArr[0]);
-  }, []);
-
-  const pageHandler = (el: Array<IComics>, index: number) => {
-    setCurPage(index + 1);
-    page(el);
+  const handleChangePage = (
+    event: React.ChangeEvent<unknown>,
+    newPage: number
+  ) => {
+    setCurrentPage(newPage);
   };
 
   return (
-    <div className="pagination">
-      {paginationArr.map((el, index) => {
-        return (
-          <button
-            key={index}
-            onClick={() => {
-              pageHandler(el, index);
-            }}
-            className={curPage === index + 1 ? "active-btn" : "btn"}
-          >
-            {index + 1}
-          </button>
-        );
-      })}
+    <div>
+      <Collection comics={currentComics} />
+
+      {totalPages > 1 ? (
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          className="pagination"
+          onChange={handleChangePage}
+        />
+      ) : null}
     </div>
   );
 };
-
-export default Pagination;
+export default PaginationCollection;

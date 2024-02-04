@@ -14,23 +14,25 @@ const ComicPageBtnFavorits: FC<ComicPageBtnFavoritsProps> = ({
   handlerRemove,
   comic,
 }) => {
-  const [favorites, setFavorites] = useState(comic.favorites || false);
-  const { isAuthenticated } = useAppSelector((state) => state.AuthReducer);
+  const [isFavorites, setIsFavorites] = useState(false);
+  const { favorites } = useAppSelector((state) => state.ComicsReducer);
+  const { isAuth } = useAppSelector((state) => state.AuthReducer);
 
   useEffect(() => {
-    if (!comic.favorites) {
-      setFavorites(true);
-    } else setFavorites(false);
-  }, [comic.favorites]);
+    const findComic = favorites.find((item) => item.id === comic.id);
+    if (findComic) {
+      setIsFavorites(true);
+    } else setIsFavorites(false);
+  }, [favorites, comic]);
 
   return (
     <div>
-      {favorites ? (
-        <FavoritesBtn handler={handlerAdd} isAuthenticated={isAuthenticated}>
+      {!isFavorites ? (
+        <FavoritesBtn handler={handlerAdd} isAuth={isAuth}>
           Add to favorites
         </FavoritesBtn>
       ) : (
-        <FavoritesBtn handler={handlerRemove} isAuthenticated={isAuthenticated}>
+        <FavoritesBtn handler={handlerRemove} isAuth={isAuth}>
           Remove from favorites
         </FavoritesBtn>
       )}

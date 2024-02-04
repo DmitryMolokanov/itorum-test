@@ -1,27 +1,25 @@
 import { FC } from "react";
 import { useParams } from "react-router-dom";
-import { Tooltip } from "@material-ui/core";
+import { Tooltip } from "@mui/material";
 import TooltipAuth from "./TooltipAuth";
 
 interface FavoritesBtnProps {
-  isAuthenticated: boolean;
-  handler: (id: number) => void;
+  isAuth: boolean;
+  handler?: (id: number) => void;
   children: React.ReactNode;
 }
 
-const FavoritesBtn: FC<FavoritesBtnProps> = ({
-  isAuthenticated,
-  handler,
-  children,
-}) => {
+const FavoritesBtn: FC<FavoritesBtnProps> = ({ isAuth, handler, children }) => {
   const params = useParams();
 
   return (
     <div>
-      <Tooltip title={!isAuthenticated ? <TooltipAuth /> : ""} arrow>
+      <Tooltip title={!isAuth ? <TooltipAuth /> : ""} arrow>
         <button
-          onClick={() => handler(+params.id!)}
-          disabled={!isAuthenticated}
+          onClick={() => {
+            if (handler) handler(+params.id!);
+          }}
+          disabled={!isAuth}
         >
           {children}
         </button>

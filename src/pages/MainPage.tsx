@@ -1,25 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Header from "../components/header/Header";
-import Collection from "../components/collection/Collection";
 import Error from "../components/generic/Error";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { getComics } from "../store/reducers/ActionCreators";
+import { ComicsCreators } from "../store/reducers/comics/ComicsCreators";
 import Loading from "../components/generic/Loading";
 import Search from "../components/generic/search/Search";
-import Pagination from "../components/generic/Pagination";
 import Footer from "../components/generic/Footer";
-import { IComics } from "../types";
+import PaginationCollection from "../components/generic/Pagination";
 
 const MainPage = () => {
   const dispatch = useAppDispatch();
   const { comics, isLoading, error } = useAppSelector(
     (state) => state.ComicsReducer
   );
-  const [page, setPage] = useState<IComics[]>([]);
 
   useEffect(() => {
-    dispatch(getComics());
-  }, [dispatch]);
+    if (comics.length > 0) return;
+    dispatch(ComicsCreators());
+  }, [dispatch, comics]);
 
   return (
     <div>
@@ -27,8 +25,7 @@ const MainPage = () => {
       <Search comics={comics} />
       {isLoading && <Loading />}
       {error && <Error />}
-      <Collection comics={comics} page={page} />
-      <Pagination comics={comics} page={setPage} />
+      <PaginationCollection comics={comics} />
       <Footer />
     </div>
   );

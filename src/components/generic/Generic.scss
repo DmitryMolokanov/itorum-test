@@ -40,11 +40,19 @@
     top: 100%;
     width: 30%;
     min-height: 20px;
-    height: fit-content;
+    height: 300px;
+    overflow-y: scroll;
     border-radius: 10px;
     background-color: white;
     z-index: 1;
     font-weight: 600;
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: red;
+      border-radius: 5px;
+    }
 
     a {
       text-decoration: none;
@@ -85,16 +93,15 @@
     background-color: white;
     border-radius: 10px;
     font-size: 1.2em;
-    input {
+    .input-value {
       border-radius: 10px;
-      outline: 0;
-      width: 90%;
       font-size: 1.2em;
       &:focus {
         border: 0;
         outline: 2px solid red;
       }
     }
+
     .send-auth {
       font-size: 1.1em;
       border: 0;
@@ -125,21 +132,16 @@
       }
     }
   }
+  .modal-form-error {
+    color: red;
+  }
 }
 .pagination {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  width: 100px;
-  height: 30px;
-  margin-top: 20px;
   margin-left: 20px;
-  .btn {
-    background-color: gray;
-  }
-  .active-btn {
-    background-color: white;
-  }
+  margin-top: 20px;
+  width: fit-content;
+  background-color: white;
+  border-radius: 5px;
 }
 
 .footer {

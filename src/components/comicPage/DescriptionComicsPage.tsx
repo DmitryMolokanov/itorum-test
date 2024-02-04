@@ -9,7 +9,7 @@ const DescriptionComicsPage: FC<DescriptionComicsPageProps> = ({
   return (
     <div className="comic-discription">
       {description !== "" ? (
-        <span>{description}</span>
+        <span className="comic-card-discription">{description}</span>
       ) : (
         <h1>Sorry! Product information not available</h1>
       )}

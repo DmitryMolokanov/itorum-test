@@ -1,34 +1,19 @@
-import { useEffect, useState } from "react";
 import { useAppSelector } from "../hooks/redux";
-import { IComics } from "../types";
 import Header from "../components/header/Header";
 import Search from "../components/generic/search/Search";
 import PageTitle from "../components/generic/PageTitle";
-import Collection from "../components/collection/Collection";
-import Pagination from "../components/generic/Pagination";
 import Footer from "../components/generic/Footer";
-import { favoriteComic } from "../store/reducers/ActionCreators";
+import PaginationCollection from "../components/generic/Pagination";
 
 const Purchase = () => {
-  const { comics } = useAppSelector((state) => state.ComicsReducer);
-  const [purchase, setPurchase] = useState<Array<IComics>>([]);
-  const [page, setPage] = useState<IComics[]>([]);
-
-  useEffect(() => {
-    const collectionFavorites = comics.filter((item) => {
-      return item.bought === true;
-    });
-    setPurchase(collectionFavorites);
-    setPage(collectionFavorites);
-  }, [comics]);
+  const { purchases } = useAppSelector((state) => state.ComicsReducer);
 
   return (
     <div>
       <Header />
-      <Search comics={comics} />
+      <Search comics={purchases} />
       <PageTitle>Purchased comics</PageTitle>
-      <Collection comics={purchase} page={page} />
-      <Pagination comics={purchase} page={setPage} />
+      <PaginationCollection comics={purchases} />
       <Footer />
     </div>
   );

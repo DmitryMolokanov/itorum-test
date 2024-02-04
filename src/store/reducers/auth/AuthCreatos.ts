@@ -1,8 +1,8 @@
 import { AuthSlice } from "./AuthSlice";
-import { AppDispatch } from "../store";
+import { AppDispatch } from "../../store";
 
 export const login =
-  (username: string, password: string) => async (dispatch: AppDispatch) => {
+  (username: string, password: string) => (dispatch: AppDispatch) => {
     try {
       if (
         username === process.env.REACT_APP_USERNAME &&
@@ -18,6 +18,10 @@ export const login =
       );
     }
   };
+
+export const resetError = () => (dispatch: AppDispatch) => {
+  dispatch(AuthSlice.actions.resetError());
+};
 
 export const logout = () => (dispatch: AppDispatch) => {
   dispatch(AuthSlice.actions.logout());

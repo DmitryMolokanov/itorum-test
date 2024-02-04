@@ -7,6 +7,7 @@ interface modalBtnProps {
 const ModalBtn: FC<modalBtnProps> = ({ handleLogin }) => {
   return (
     <button
+      type="submit"
       className="send-auth"
       onClick={(e: React.MouseEvent) => handleLogin(e)}
     >

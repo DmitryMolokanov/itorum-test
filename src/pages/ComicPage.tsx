@@ -1,10 +1,10 @@
 import { useAppSelector, useAppDispatch } from "../hooks/redux";
 import { useEffect, useState } from "react";
 import {
-  favoriteComic,
+  addFavorites,
   buyComic,
   removeFavorites,
-} from "../store/reducers/ActionCreators";
+} from "../store/reducers/comics/ComicsCreators";
 import { useParams } from "react-router-dom";
 import Header from "../components/header/Header";
 import CoverComics from "../components/collection/CoverComics";
@@ -14,10 +14,13 @@ import TitleComix from "../components/collection/TitleComix";
 import DescriptionComicsPage from "../components/comicPage/DescriptionComicsPage";
 import ComicPageBtn from "../components/comicPage/ComicPageBtnBuy";
 import ComicPageBtnFavorits from "../components/comicPage/ComicPageBtnFavorits";
+import FavoritesBtn from "../components/comicPage/FavoritesBtn";
 
 const ComicPage = () => {
   const { comics } = useAppSelector((state) => state.ComicsReducer);
+
   const [comic, setComic] = useState<IComics | undefined>(undefined);
+  const isAuth = useAppSelector((state) => state.AuthReducer.isAuth);
 
   const params = useParams();
   const dispatch = useAppDispatch();
@@ -27,7 +30,7 @@ const ComicPage = () => {
   };
 
   const setFavorites = (id: number) => {
-    dispatch(favoriteComic(id));
+    dispatch(addFavorites(id));
   };
 
   const removeFavorite = (id: number) => {
@@ -52,13 +55,19 @@ const ComicPage = () => {
             <DescriptionComicsPage description={comic.description} />
             <div className="comic-options-container">
               <span className="comic-options-price">{`Price: ${comic.prices[0].price}`}</span>
+
               <div className="comic-options-buttons">
-                <ComicPageBtn handler={buy} comic={comic} />
-                <ComicPageBtnFavorits
-                  handlerAdd={setFavorites}
-                  handlerRemove={removeFavorite}
-                  comic={comic}
-                />
+                {isAuth ? <ComicPageBtn handler={buy} comic={comic} /> : null}
+
+                {isAuth ? (
+                  <ComicPageBtnFavorits
+                    handlerAdd={setFavorites}
+                    handlerRemove={removeFavorite}
+                    comic={comic}
+                  />
+                ) : (
+                  <FavoritesBtn isAuth={isAuth}>Add to favorites</FavoritesBtn>
+                )}
               </div>
             </div>
           </div>

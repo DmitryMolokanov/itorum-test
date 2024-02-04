@@ -7,6 +7,7 @@ interface CloseBtnProps {
 const CloseBtn: FC<CloseBtnProps> = ({ closeModal }) => {
   return (
     <button
+      type="button"
       className="close-modal"
       onClick={(e) => {
         closeModal(e);
